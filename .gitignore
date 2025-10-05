@@ -1,0 +1,28 @@
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Local configuration files
+*.env
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# Temporary or backup files
+*.log
+*.bak
+*.tmp
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Exported data or diagrams
+*.csv
+*.png
+*.pdf
+*.drawio
+*.svg
