@@ -1,0 +1,6 @@
+  pandas
+  seaborn
+  plotly
+  streamlit
+  psycopg2-binary
+  jupyter

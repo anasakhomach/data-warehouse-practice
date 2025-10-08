@@ -1,0 +1,43 @@
+-- last pieces of insights! Who are our VIPs
+
+  SELECT age_group, COUNT(*) AS total_vips
+  FROM gold.report_customers
+  WHERE customer_segment = 'VIP'
+  GROUP BY age_group
+  ORDER BY total_vips DESC;
+
+50 and above	1083
+40-49	520
+30-39	14
+---
+
+-- How much is a VIP order worth?
+
+    SELECT
+      customer_segment,
+      ROUND(AVG(avg_order_value)::NUMERIC, 2) AS average_aov
+  FROM gold.report_customers
+  GROUP BY customer_segment;
+
+New	614.12
+Regular	1697.82
+VIP	2648.30
+
+---
+-- Who are your "at-risk" customers?
+
+  SELECT customer_name, recency
+  FROM gold.report_customers
+  ORDER BY recency DESC
+  LIMIT 10;
+  
+Lucas Hill	177
+Sydney Rogers	177
+Patrick Cook	177
+Alyssa Garcia	177
+Rachael Martinez	177
+Garrett Cooper	177
+Richard Brooks	177
+Isabella Green	176
+Don Lal	176
+Rachel Robinson	176
