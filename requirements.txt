@@ -3,4 +3,5 @@
   plotly
   streamlit
   psycopg2-binary
+  sqlalchemy
   jupyter
