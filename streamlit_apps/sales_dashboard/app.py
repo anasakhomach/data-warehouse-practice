@@ -23,11 +23,9 @@ st.write("Welcome to our sales dashboard! We will build our visuals here.")
 st.success("Attempting to connect to the database using st.connection...")
 
 try:
-    conn = st.connection("postgresql", type="sql")
-
-    # Example query to verify connection
-    df = conn.query('SELECT COUNT(*) FROM gold.fact_sales;', ttl=600)
-
+    # Test connection
+    test_conn = st.connection("postgresql", type="sql")
+    df = test_conn.query('SELECT COUNT(*) FROM gold.fact_sales;', ttl=600)
     st.success(f"Connection successful! The fact_sales table has {df.iloc[0,0]:,} rows.")
 
 except Exception as e:
@@ -37,12 +35,14 @@ except Exception as e:
 # --- Data Loading Functions ---
 @st.cache_data
 def load_segmentation_data():
+    conn = st.connection("postgresql", type="sql")
     query = "SELECT customer_segment FROM gold.report_customers;"
     df = conn.query(query, ttl=600)
     return df
 
 @st.cache_data
 def load_aov_data():
+    conn = st.connection("postgresql", type="sql")
     query = """
         SELECT customer_segment, AVG(avg_order_value) AS average_aov
         FROM gold.report_customers
@@ -53,6 +53,7 @@ def load_aov_data():
 
 @st.cache_data
 def load_category_revenue_data():
+    conn = st.connection("postgresql", type="sql")
     query = """
         WITH category_sales AS (
             SELECT p.category, SUM(f.sales_amount) AS total_sales
@@ -69,6 +70,7 @@ def load_category_revenue_data():
 
 @st.cache_data
 def load_vip_age_data():
+    conn = st.connection("postgresql", type="sql")
     query = """
         SELECT age_group
         FROM gold.report_customers
@@ -79,6 +81,7 @@ def load_vip_age_data():
 
 @st.cache_data
 def load_monthly_sales_data():
+    conn = st.connection("postgresql", type="sql")
     query = """
         SELECT DATE_TRUNC('month', order_date) AS sales_month, SUM(sales_amount) AS total_sales
         FROM gold.fact_sales
@@ -91,6 +94,7 @@ def load_monthly_sales_data():
 
 @st.cache_data
 def load_main_kpis():
+    conn = st.connection("postgresql", type="sql")
     # A single query to get all main KPIs efficiently
     query = """
         SELECT
