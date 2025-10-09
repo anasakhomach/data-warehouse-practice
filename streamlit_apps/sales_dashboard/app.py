@@ -83,7 +83,7 @@ def load_vip_age_data():
 def load_monthly_sales_data():
     conn = st.connection("postgresql", type="sql")
     query = """
-        SELECT DATE_TRUNC('month', order_date) AS sales_month, SUM(sales_amount) AS total_sales
+        SELECT DATE_TRUNC('month', order_date::date) AS sales_month, SUM(sales_amount) AS total_sales
         FROM gold.fact_sales
         WHERE order_date IS NOT NULL
         GROUP BY sales_month
